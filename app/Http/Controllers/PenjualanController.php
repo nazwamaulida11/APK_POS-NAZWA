@@ -62,10 +62,18 @@ class PenjualanController extends Controller
         //
     }
 
-    public function show(string $id)
-    {
-        //
+    public function show(Penjualan $penjualan)
+{
+    $user = Auth::user();
+
+    if ($user->role->name === 'kasir' && $penjualan->user_id != Auth::id()) {
+        abort(403, 'Akses ditolak');
     }
+
+    $penjualan->load(['itemPenjualan.produk', 'user']);
+
+    return view('penjualan.detail', compact('penjualan'));
+}
 
     public function edit(Penjualan $penjualan)
     {

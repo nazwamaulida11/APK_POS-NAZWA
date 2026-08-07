@@ -19,10 +19,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::middleware('role:admin,kasir')->group(function () {
-        Route::resource('penjualan', PenjualanController::class)->except('show');
-        Route::resource('itempenjualan', ItemPenjualanController::class)->except(['index','show','create','edit']);
+    Route::get('/penjualan/{penjualan}', [PenjualanController::class, 'show'])->name('penjualan.show');
+    Route::resource('penjualan', PenjualanController::class)->except('show');
+    Route::resource('itempenjualan', ItemPenjualanController::class)->except(['index','show','create','edit']);
+});
+    // Produk: bisa diakses admin & kasir, tapi tetap pakai prefix/name 'admin.'
+    Route::middleware('role:admin,kasir')->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('produk', ProdukController::class)->except('show');
     });
 
+    // Users: khusus admin
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -31,8 +37,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
         Route::post('/users/update/{user}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/users/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-
-        Route::resource('produk', ProdukController::class)->except('show');
     });
 
 });

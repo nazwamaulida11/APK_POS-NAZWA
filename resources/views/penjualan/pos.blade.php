@@ -4,6 +4,44 @@
 
 @section('content')
 
+<style>
+    h4 {
+        color: #2c3e50;
+    }
+
+    .table thead th {
+        background-color: #4e73df !important;
+        color: #ffffff !important;
+    }
+
+    .btn-primary,
+    .btn-outline-primary:hover {
+        background-color: #4e73df;
+        border-color: #4e73df;
+    }
+
+    .btn-outline-primary {
+        color: #4e73df;
+        border-color: #4e73df;
+    }
+
+    .btn-success {
+        background-color: #4e73df;
+        border-color: #4e73df;
+    }
+
+    .btn-success:hover {
+        background-color: #3d5fc4;
+        border-color: #3d5fc4;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+    }
+</style>
+
 @if(session('error'))
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
     {{ session('error') }}

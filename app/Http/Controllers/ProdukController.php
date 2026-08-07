@@ -66,7 +66,7 @@ class ProdukController extends Controller
 
         Produk::create($data);
 
-        return redirect()->route('produk.index')->with('succes', 'Product created succesfully.');
+        return redirect()->route('admin.produk.index')->with('success', 'Product created succesfully.');
        
     }
 
@@ -121,7 +121,7 @@ class ProdukController extends Controller
 
            $produk->update($data);
 
-           return redirect()->route('produk.edit', $produk->id)->with('success', 'Product update succesfully.');
+           return redirect()->route('admin.produk.index')->with('success', 'Product updated succesfully.');
     }
 
     /**
@@ -129,13 +129,20 @@ class ProdukController extends Controller
      */
     public function destroy(Produk $produk)
     {
+        $this->authorize('update', $produk);
 
-         $this->authorize('update', $produk);
-         
-        if ($produk->foto) {
-            Storage::disk('public')->delete($produk->foto);
+        try {
+            if ($produk->foto) {
+                Storage::disk('public')->delete($produk->foto);
+            }
+
+            $produk->delete();
+
+            return redirect()->route('admin.produk.index')->with('success', 'Product deleted succesfully.');
+
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('admin.produk.index')
+                ->with('error', 'Produk tidak bisa dihapus karena sudah memiliki riwayat transaksi penjualan.');
         }
-        $produk->delete();
-        return redirect()->route('produk.index')->with('success', 'Product deleted succesfully.');
     }
 }

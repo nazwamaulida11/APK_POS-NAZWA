@@ -4,6 +4,25 @@
 
 @section('content')
 
+<style>
+    h1 {
+        color: #2c3e50;
+    }
+
+    .table thead th {
+        background-color: #4e73df !important;
+        color: #ffffff !important;
+    }
+
+    .table > tbody > tr:nth-child(even) > td {
+        background-color: #f2f6fc !important;
+    }
+
+    .table > tbody > tr:hover > td {
+        background-color: #dce6f7 !important;
+    }
+</style>
+
 @if(session('error'))
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
     {{ session('error') }}
@@ -58,7 +77,7 @@
             <td>{{ $sale->metode_pembayaran }}</td>
             <td>{{ $sale->status }}</td>
             <td class="d-flex gap-1">
-                <a href="" class="btn btn-primary btn-sm">Detail</a>
+               <a href="{{ route('penjualan.show', $sale) }}" class="btn btn-primary btn-sm">Detail</a>
                 @if($sale->status === 'OPEN' && Auth::user()->role->name === 'admin')
                 <a href="{{ route('penjualan.edit', $sale) }}" class="btn btn-warning btn-sm">Edit</a>
                 <form action="{{ route('penjualan.destroy', $sale) }}" method="POST" class="d-inline">

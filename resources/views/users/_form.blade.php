@@ -55,5 +55,5 @@
 </div>
 
 <button class="btn btn-success">Simpan</button>
-<a href="{{ route('admin.users') }}" class="btn btn-secondary">Kembali</a>
+<a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Kembali</a>
 

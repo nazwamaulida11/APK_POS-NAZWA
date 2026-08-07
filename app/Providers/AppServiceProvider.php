@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
         User::class => DashboardPolicy::class,
         Produk::class => ProdukPolicy::class,
         Penjualan::class => PenjualanPolicy::class,
-        ItemPenjualan::class => ItemPenjualanPolicy::class,  // ← fix typo
+        ItemPenjualan::class => ItemPenjualanPolicy::class, 
     ];
 
     /**

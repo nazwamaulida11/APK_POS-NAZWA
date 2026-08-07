@@ -13,21 +13,22 @@
           </a>
         </li>
 
-        {{-- Hanya tampil untuk admin --}}
+        
         @if(auth()->user()->role->name === 'admin')
         <li class="nav-item">
           <a class="nav-link {{ Request::is('admin/users') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
             Users
           </a>
         </li>
+        @endif
+
+        
         <li class="nav-item">
           <a class="nav-link {{ Request::is('admin/produk') ? 'active' : '' }}" href="{{ route('admin.produk.index') }}">
             Produk
           </a>
         </li>
-        @endif
 
-        {{-- Tampil untuk admin & kasir --}}
         <li class="nav-item">
           <a class="nav-link {{ Request::is('penjualan') ? 'active' : '' }}" href="{{ route('penjualan.index') }}">
             Penjualan

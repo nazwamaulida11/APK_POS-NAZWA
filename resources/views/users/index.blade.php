@@ -4,7 +4,6 @@
 
 @section('content')
 
-@include('layouts.navbar')
 
 <style>
     h1 {

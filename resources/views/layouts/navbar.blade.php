@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
+  <div class="container">
     <a class="navbar-brand" href="#">POS</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -13,16 +13,19 @@
           </a>
         </li>
 
-        
-        @if(auth()->user()->role->name === 'admin')
+        @if(auth()->check() && auth()->user()->role?->name === 'admin')
         <li class="nav-item">
           <a class="nav-link {{ Request::is('admin/users') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
             Users
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('jenis') ? 'active' : '' }}" href="{{ route('admin.jenis.index') }}">
+           Jenis
+          </a>
+        </li>
         @endif
 
-        
         <li class="nav-item">
           <a class="nav-link {{ Request::is('admin/produk') ? 'active' : '' }}" href="{{ route('admin.produk.index') }}">
             Produk
@@ -37,10 +40,12 @@
 
       </ul>
 
+      @auth
       <form action="{{ route('logout') }}" method="POST">
         @csrf
         <button class="btn btn-outline-success" type="submit">Logout</button>
       </form>
+      @endauth
     </div>
   </div>
 </nav>

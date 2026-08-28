@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
     <head>
@@ -5,11 +6,7 @@
         <title>@yield('title')</title>
         @vite(['resources/css/app.css','resources/js/app.js'])
 
-         <meta charset="UTF-8">
-    <title>@yield('title')</title>
-    @vite(['resources/css/app.css','resources/js/app.js'])
-
-    <style>
+        <style>
         .navbar-nav .nav-link.active {
             text-decoration: underline;
             text-decoration-thickness: 2px;
@@ -20,6 +17,10 @@
         </style>
     </head>
     <body>
+
+        @auth
+            @include('layouts.navbar')
+        @endauth
 
         <div class="container">
 

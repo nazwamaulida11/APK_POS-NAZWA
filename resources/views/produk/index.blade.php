@@ -51,6 +51,10 @@
                             {{ $item->nama }}
                         </p>
 
+                        <span class="badge bg-secondary mb-1">
+                            {{ $item->jenis->nama_jenis ?? '-' }}
+                        </span>
+
                         <p class="mb-0 fw-semibold text-danger">
                             Rp {{ number_format($item->harga_jual, 0, ',', '.') }}
                         </p>

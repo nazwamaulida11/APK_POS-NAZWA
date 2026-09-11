@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-
 class PenjualanController extends Controller
 {
     public function index(SearchRequest $request)
@@ -93,6 +92,7 @@ class PenjualanController extends Controller
     {
         $request->validate([
             'metode_pembayaran' => 'required|in:CASH,QRIS',
+            'uang_dibayar'      => 'nullable|numeric|min:0',
         ]);
 
         $sale = Penjualan::findOrFail($id);
@@ -114,9 +114,29 @@ class PenjualanController extends Controller
             return back()->with('error', 'Transaksi sudah selesai');
         }
 
+        // Jika CASH, uang dibayar wajib diisi dan tidak boleh kurang dari total
+        if ($request->metode_pembayaran === 'CASH') {
+            if (!$request->filled('uang_dibayar')) {
+                return back()->withInput()->with('error', 'Uang dibayar wajib diisi untuk pembayaran Cash');
+            }
+
+            if ((float) $request->uang_dibayar < $sale->total_pembayaran) {
+                return back()->withInput()->with('error', 'Uang dibayar kurang dari total pembayaran');
+            }
+
+            $uangDibayar = (float) $request->uang_dibayar;
+        } else {
+            // Metode non-Cash (QRIS) dianggap dibayar pas
+            $uangDibayar = $sale->total_pembayaran;
+        }
+
+        $kembalian = $uangDibayar - $sale->total_pembayaran;
+
         $sale->update([
             'status'            => 'COMPLETED',
             'metode_pembayaran' => $request->metode_pembayaran,
+            'uang_dibayar'      => $uangDibayar,
+            'kembalian'         => $kembalian,
         ]);
 
         return redirect()->route('penjualan.index')
@@ -154,4 +174,11 @@ class PenjualanController extends Controller
         return redirect()->route('penjualan.index')
             ->with('success', 'Transaksi berhasil dibatalkan');
     }
+    public function cetakStruk(Penjualan $penjualan)
+{
+    // Pastikan relasi yang dibutuhkan sudah dimuat
+    $penjualan->load(['user', 'itemPenjualan.produk']);
+    
+    return view('penjualan.struk', compact('penjualan'));
+}
 }

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
     <head>
@@ -23,12 +22,6 @@
         @endauth
 
         <div class="container">
-
-            @if (session('success'))
-                <div class="alert" style="background-color:#e6ecfa; color:#2b3990; border:1px solid #4a63c4; border-radius:4px; padding:10px 16px; margin:12px auto; max-width:400px; text-align:center;">
-                    {{ session('success') }}
-                </div>
-            @endif
 
             @yield('content')
         </div>

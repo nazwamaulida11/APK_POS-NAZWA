@@ -77,7 +77,13 @@
             <td>{{ $sale->metode_pembayaran }}</td>
             <td>{{ $sale->status }}</td>
             <td class="d-flex gap-1">
-               <a href="{{ route('penjualan.show', $sale) }}" class="btn btn-primary btn-sm">Detail</a>
+                <a href="{{ route('penjualan.show', $sale) }}" class="btn btn-primary btn-sm">Detail</a>
+
+                {{-- TOMBOL CETAK STRUK (Hanya muncul jika status COMPLETED) --}}
+                @if($sale->status === 'COMPLETED')
+                <a href="{{ route('penjualan.struk', $sale) }}" target="_blank" class="btn btn-secondary btn-sm">Cetak</a>
+                @endif
+
                 @if($sale->status === 'OPEN' && Auth::user()->role->name === 'admin')
                 <a href="{{ route('penjualan.edit', $sale) }}" class="btn btn-warning btn-sm">Edit</a>
                 <form action="{{ route('penjualan.destroy', $sale) }}" method="POST" class="d-inline">

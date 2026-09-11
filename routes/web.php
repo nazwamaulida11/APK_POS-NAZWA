@@ -25,6 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:admin,kasir')->group(function () {
         Route::resource('penjualan', PenjualanController::class)->except('show');
         Route::get('/penjualan/{penjualan}', [PenjualanController::class, 'show'])->name('penjualan.show');
+        
+        // Pindahkan rute cetak struk ke sini agar namanya tetap 'penjualan.struk'
+        Route::get('/penjualan/{penjualan}/struk', [PenjualanController::class, 'cetakStruk'])->name('penjualan.struk');
+
         Route::resource('itempenjualan', ItemPenjualanController::class)->except(['index', 'show', 'create', 'edit']);
     });
 
@@ -40,8 +44,9 @@ Route::middleware('auth')->group(function () {
         Route::middleware('role:admin')->group(function () {
             Route::resource('users', UserController::class);
             Route::resource('jenis', JenisController::class)->parameters([
-                'jenis' => 'jenis'
+                'jenis' => 'jenis'   
             ]);
+            // Rute cetak struk yang lama di sini sudah dihapus
         });
 
     });

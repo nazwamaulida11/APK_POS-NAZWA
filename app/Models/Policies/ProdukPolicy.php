@@ -37,7 +37,7 @@ class ProdukPolicy
      */
     public function update(User $user, Produk $produk): bool
     {
-        return $user->role->name === 'admin';
+       return $user->role->name === 'admin';
     }
 
     /**
@@ -45,7 +45,7 @@ class ProdukPolicy
      */
     public function delete(User $user, Produk $produk): bool
     {
-        return $user->role->name === 'admin';
+       return $user->role->name === 'admin';
     }
 
     /**

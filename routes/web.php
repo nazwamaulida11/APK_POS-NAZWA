@@ -8,6 +8,7 @@ use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AboutController;
 
 // Guest Routes
 Route::middleware('guest')->group(function () {
@@ -19,6 +20,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // Transaksi (Admin & Kasir)

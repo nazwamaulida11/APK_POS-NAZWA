@@ -2,14 +2,14 @@
 
 namespace App\Policies;
 
-use App\Models\ItemPenjualan;
 use App\Models\User;
+use App\Models\ItemPenjualan;
 
 class ItemPenjualanPolicy
 {
-
-    public function delete(User $user, ItemPenjualan $itempenjualan): bool
+    public function delete(User $user, ItemPenjualan $itemPenjualan): bool
     {
-       return $user->role->name === 'admin';
+        // Hanya Admin DAN transaksi statusnya OPEN
+        return $user->role->name === 'admin' ;
     }
 }

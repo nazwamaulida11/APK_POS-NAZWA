@@ -9,9 +9,9 @@
 
 <style>
     .about-banner{
-        height: 240px;
+        height: 320px;
         background-size: cover;
-        background-position: center;
+        background-position: center 70%;
         border-radius: 0.75rem 0.75rem 0 0;
         position: relative;
     }
@@ -21,19 +21,21 @@
         inset: 0;
         background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.55));
         border-radius: 0.75rem 0.75rem 0 0;
+        z-index: 1;
     }
     .about-logo{
-        width: 96px;
-        height: 96px;
+        width: 130px;
+        height: 130px;
         border-radius: 50%;
         object-fit: cover;
-        border: 4px solid #fff;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border: 5px solid #fff;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.3);
         position: absolute;
         left: 50%;
-        bottom: -48px;
+        bottom: -65px;
         transform: translateX(-50%);
         background: #fff;
+        z-index: 2;
     }
     .product-photo{
         width: 100%;
@@ -52,13 +54,11 @@
                 <div class="card shadow-sm border-0 ">
 
                     <!-- Banner + Logo -->
-                    <div class="about-banner" style="background-image: url('{{ asset('images/about-banner.jpg') }}');">
-                    </div>
-                    <div class="text-center" style="position: relative;">
-                        <img src="{{ asset('images/logo-nazwa-food.png') }}" alt="Logo nazwa's food" class="about-logo">
+                    <div class="about-banner" style="background-image: url('{{ asset('images/tempat.PNG') }}');">
+                        <img src="{{ asset('images/logo.PNG') }}" alt="nazwa's food" class="about-logo">
                     </div>
 
-                    <div class="card-body m-4" style="margin-top: 3.5rem !important;">
+                    <div class="card-body m-4" style="margin-top: 5rem !important;">
 
                         <!-- Header -->
                         <section id="content1" class="jumbotron text-center bg-white p-4 rounded-3 mb-4">
@@ -88,19 +88,19 @@
                             </h6>
                             <div class="row g-3 text-center">
                                 <div class="col-6 col-md-3">
-                                    <img src="{{ asset('images/produk/nasgor.jpg') }}" alt="Nasi Goreng" class="product-photo">
+                                    <img src="{{ asset('images/nasigoreng.jpeg') }}" alt="Nasi Goreng" class="product-photo">
                                     <small class="text-secondary d-block">Nasi Goreng</small>
                                 </div>
                                 <div class="col-6 col-md-3">
-                                    <img src="{{ asset('images/produk/burger.jpg') }}" alt="Burger King" class="product-photo">
+                                    <img src="{{ asset('images/burger.png') }}" alt="Burger King" class="product-photo">
                                     <small class="text-secondary d-block">Burger King</small>
                                 </div>
                                 <div class="col-6 col-md-3">
-                                    <img src="{{ asset('images/produk/kopilatte.jpg') }}" alt="Kopi Latte" class="product-photo">
+                                    <img src="{{ asset('images/kopiiiiii.PNG') }}" alt="Kopi Latte" class="product-photo">
                                     <small class="text-secondary d-block">Kopi Latte</small>
                                 </div>
                                 <div class="col-6 col-md-3">
-                                    <img src="{{ asset('images/produk/matchalatte.jpg') }}" alt="Matcha Latte" class="product-photo">
+                                    <img src="{{ asset('images/matchaaaa.PNG') }}" alt="Matcha Latte" class="product-photo">
                                     <small class="text-secondary d-block">Matcha Latte</small>
                                 </div>
                             </div>
@@ -145,6 +145,21 @@
                                 Membantu operasional nazwa's food dalam pencatatan transaksi penjualan,
                                 pengelolaan stok barang, dan pembuatan laporan keuangan harian secara otomatis dan akurat.
                             </p>
+                        </div>
+
+                        <!-- Lokasi -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-dark mb-3">
+                                <i class="bi bi-geo-alt-fill me-2 text-primary"></i>Lokasi Kami
+                            </h6>
+                            <div class="rounded-3 overflow-hidden border shadow-sm" style="height: 220px;">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=[GANTI_DENGAN_EMBED_LINK_MAPS_ANDA]"
+                                    width="100%" height="100%" style="border:0;"
+                                    allowfullscreen loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
                         </div>
 
                         <!-- Kontak -->

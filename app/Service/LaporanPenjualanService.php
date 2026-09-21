@@ -7,8 +7,6 @@ use Carbon\Carbon;
 
 class LaporanPenjualanService
 {
-   
-
     public function ringkasanHariIni(): array
     {
         $data = DB::table('penjualan')
@@ -29,6 +27,7 @@ class LaporanPenjualanService
             'total_non_tunai' => $data->total_non_tunai ?? 0,
         ];
     }
+
     public function produkTerlarisHariIni(int $limit = 5)
     {
         return DB::table('item_penjualan')
@@ -36,7 +35,7 @@ class LaporanPenjualanService
         ->join('produk', 'produk.id', '=', 'item_penjualan.produk_id')
         ->whereDate('penjualan.created_at', Carbon::today())
         ->where('penjualan.status', 'COMPLETED')
-        ->groupBy('produk.id', 'produk.nama')
+        ->groupBy('produk.id', 'produk.nama', 'produk.stok') // <- Tambahkan produk.stok di sini
         ->select(
             'produk.nama',
             'produk.stok',
@@ -47,4 +46,3 @@ class LaporanPenjualanService
         ->get();
     }
 }
-   

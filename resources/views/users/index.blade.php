@@ -24,8 +24,10 @@
     }
 </style>
 
-<h1>Halaman Users</h1>
-<a href="{{ route('admin.users.create') }}" class="btn btn-primary">Create</a>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Halaman Users</h1>
+    <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Tambah Users</a>
+</div>
 
 <form action="{{ route('admin.users.store') }}" method="GET" class="mb-3">
     <div class="input-group">

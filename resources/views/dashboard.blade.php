@@ -9,7 +9,7 @@
 
     <style>
         .page-heading {
-            color: #1e293b;
+            color: #2c3e50;
             font-weight: 700;
         }
 
@@ -19,7 +19,7 @@
         }
 
         .section-title {
-            color: #334155;
+            color: #2c3e50;
             font-weight: 600;
             font-size: 1.15rem;
             margin: 2rem 0 1rem;
@@ -64,7 +64,7 @@
         .stat-card .card-title {
             font-size: 1.6rem;
             font-weight: 700;
-            color: #1e293b;
+            color: #2c3e50;
             margin-bottom: 0;
         }
 
@@ -80,7 +80,7 @@
         .panel-card h3 {
             font-size: 1rem;
             font-weight: 600;
-            color: #334155;
+            color: #2c3e50;
             margin-bottom: 1rem;
         }
 
@@ -89,8 +89,8 @@
         }
 
         .table thead th {
-            background-color: #f1f5f9;
-            color: #475569;
+            background-color: #4e73df !important;
+            color: #ffffff !important;
             font-size: .8rem;
             text-transform: uppercase;
             letter-spacing: .03em;
@@ -104,8 +104,12 @@
             border-color: #f1f5f9;
         }
 
-        .table tbody tr:hover {
-            background-color: #f8fafc;
+        .table > tbody > tr:nth-child(even) > td {
+            background-color: #f2f6fc !important;
+        }
+
+        .table > tbody > tr:hover > td {
+            background-color: #dce6f7 !important;
         }
 
         .badge-stok {
@@ -143,6 +147,10 @@
             color: #94a3b8;
             font-style: italic;
         }
+
+        .text-rupiah {
+            color: #16a34a !important;
+        }
     </style>
 
     <div class="container py-3">
@@ -163,7 +171,7 @@
                 <div class="card stat-card">
                     <div class="card-header">Total Nilai Penjualan Hari Ini</div>
                     <div class="card-body">
-                        <h5 class="card-title">Rp {{ number_format($ringkasan['total_penjualan']) }}</h5>
+                        <h5 class="card-title text-rupiah">Rp {{ number_format($ringkasan['total_penjualan']) }}</h5>
                     </div>
                 </div>
             </div>
@@ -184,7 +192,7 @@
                 <div class="card stat-card">
                     <div class="card-header">Total Pembayaran Tunai</div>
                     <div class="card-body">
-                        <h5 class="card-title">Rp {{ number_format($ringkasan['total_cash']) }}</h5>
+                        <h5 class="card-title text-rupiah">Rp {{ number_format($ringkasan['total_cash']) }}</h5>
                     </div>
                 </div>
             </div>
@@ -192,7 +200,7 @@
                 <div class="card stat-card">
                     <div class="card-header">Total Pembayaran Non-Tunai</div>
                     <div class="card-body">
-                        <h5 class="card-title">Rp {{ number_format($ringkasan['total_non_tunai']) }}</h5>
+                        <h5 class="card-title text-rupiah">Rp {{ number_format($ringkasan['total_non_tunai']) }}</h5>
                     </div>
                 </div>
             </div>

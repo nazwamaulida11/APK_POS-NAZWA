@@ -18,12 +18,13 @@ class ProdukController extends Controller
 
         $keyword = $request->input('search');
 
-        $products = Produk::with(['user', 'jenis']) // Eager loading relasi jenis
+        $products = Produk::with(['user', 'jenis'])
             ->when($keyword, function ($query) use ($keyword) {
                 $query->where('nama', 'like', '%' . $keyword . '%');
             })
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(12)
+            ->withQueryString();
 
         return view('produk.index', compact('products'));
     }
@@ -31,7 +32,7 @@ class ProdukController extends Controller
     public function create()
     {
         $this->authorize('create', Produk::class);
-        $jenisList = Jenis::all(); // Mengambil pilihan jenis
+        $jenisList = Jenis::all();
 
         return view('produk.create', compact('jenisList'));
     }
@@ -44,7 +45,7 @@ class ProdukController extends Controller
 
         $data = [
             'user_id'    => Auth::id(),
-            'jenis_id'   => $dataReq['jenis_id'], // Tambahkan jenis_id
+            'jenis_id'   => $dataReq['jenis_id'],
             'nama'       => $dataReq['name'],
             'harga_beli' => $dataReq['purchase_price'],
             'harga_jual' => $dataReq['selling_price'],
@@ -65,7 +66,7 @@ class ProdukController extends Controller
     public function edit(Produk $produk)
     {
         $this->authorize('update', $produk);
-        $jenisList = Jenis::all(); // Mengambil pilihan jenis
+        $jenisList = Jenis::all();
 
         return view('produk.edit', compact('produk', 'jenisList'));
     }
@@ -78,7 +79,7 @@ class ProdukController extends Controller
 
         $data = [
             'user_id'    => Auth::id(),
-            'jenis_id'   => $dataReq['jenis_id'], // Update jenis_id
+            'jenis_id'   => $dataReq['jenis_id'],
             'nama'       => $dataReq['name'],
             'harga_beli' => $dataReq['purchase_price'],
             'harga_jual' => $dataReq['selling_price'],
@@ -89,14 +90,16 @@ class ProdukController extends Controller
             if ($produk->foto && Storage::disk('public')->exists($produk->foto)) {
                 Storage::disk('public')->delete($produk->foto);
             }
-
             $data['foto'] = $request->file('foto')->store('produk', 'public');
         }
 
         $produk->update($data);
 
         return redirect()
-            ->route('admin.produk.index')
+            ->route('admin.produk.index', array_filter([
+                'page'   => $request->query('page'),
+                'search' => $request->query('search'),
+            ]))
             ->with('success', 'Product updated successfully.');
     }
 
@@ -111,14 +114,16 @@ class ProdukController extends Controller
     {
         $this->authorize('delete', $produk);
 
+        if ($produk->itemPenjualan()->exists()) {
+            return back()->with('error', 'Produk "' . $produk->nama . '" tidak bisa dihapus karena sudah memiliki riwayat transaksi.');
+        }
+
         if ($produk->foto && Storage::disk('public')->exists($produk->foto)) {
             Storage::disk('public')->delete($produk->foto);
         }
 
         $produk->delete();
 
-        return redirect()
-            ->route('admin.produk.index')
-            ->with('success', 'Product deleted successfully.');
+        return back()->with('success', 'Product deleted successfully.');
     }
 }

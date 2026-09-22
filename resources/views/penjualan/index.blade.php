@@ -21,6 +21,10 @@
     .table > tbody > tr:hover > td {
         background-color: #dce6f7 !important;
     }
+
+    .text-rupiah {
+        color: #16a34a !important;
+    }
 </style>
 
 @if(session('error'))
@@ -37,9 +41,10 @@
 </div>
 @endif
 
-<h1>Halaman Penjualan</h1>
-
-<a href="{{ route('penjualan.create') }}" class="btn btn-primary mb-3">Create</a>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Halaman Penjualan</h1>
+    <a href="{{ route('penjualan.create') }}" class="btn btn-primary">Tambah Penjualan</a>
+</div>
 
 <form action="{{ route('penjualan.index') }}" method="GET" class="mb-3">
     <div class="input-group">
@@ -73,7 +78,7 @@
             <td>{{ $sales->firstItem() + $loop->index }}</td>
             <td>{{ $sale->created_at->translatedFormat('d-m-Y H:i:s') }}</td>
             <td>{{ $sale->user->name }}</td>
-            <td>Rp {{ number_format($sale->total_pembayaran, 0, ',', '.') }}</td>
+            <td class="text-rupiah">Rp {{ number_format($sale->total_pembayaran, 0, ',', '.') }}</td>
             <td>{{ $sale->metode_pembayaran }}</td>
             <td>{{ $sale->status }}</td>
             <td class="d-flex gap-1">

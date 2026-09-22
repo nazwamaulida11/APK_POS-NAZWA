@@ -1,4 +1,4 @@
-@extends('layouts.app') {{-- sesuaikan dengan layout admin kamu --}}
+@extends('layouts.app')
 
 @section('content')
 <div class="container py-4">
@@ -22,9 +22,9 @@
     </div>
 
     {{-- Grid produk --}}
-    <div class="row g-3">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
         @forelse ($products as $item)
-            <div class="col-6 col-md-4 col-lg-3">
+            <div class="col">
                 <div class="card h-100 shadow-sm border-0 product-card">
 
                     {{-- Foto + badge stok --}}
@@ -34,13 +34,21 @@
                              class="w-100 h-100"
                              style="object-fit:cover;">
 
-                        @if ($item->stok > 0)
-                            <span class="badge bg-success position-absolute top-0 start-0 m-2">
+                        @if ($item->stok <= 0)
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-2">
+                                Habis
+                            </span>
+                        @elseif ($item->stok < 5)
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-2">
+                                Stok {{ $item->stok }}
+                            </span>
+                        @elseif ($item->stok < 10)
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">
                                 Stok {{ $item->stok }}
                             </span>
                         @else
-                            <span class="badge bg-danger position-absolute top-0 start-0 m-2">
-                                Habis
+                            <span class="badge bg-success position-absolute top-0 start-0 m-2">
+                                Stok {{ $item->stok }}
                             </span>
                         @endif
                     </div>
@@ -55,16 +63,16 @@
                             {{ $item->jenis->nama_jenis ?? '-' }}
                         </span>
 
-                        <p class="mb-0 fw-semibold text-danger">
+                        <p class="mb-0 fw-semibold text-rupiah">
                             Rp {{ number_format($item->harga_jual, 0, ',', '.') }}
                         </p>
-                        <p class="mb-2 small text-muted text-decoration-line-through">
+                        <p class="mb-2 small text-rupiah text-decoration-line-through">
                             Rp {{ number_format($item->harga_beli, 0, ',', '.') }}
                         </p>
-
+                         @if(auth()->check() && auth()->user()->role?->name === 'admin')
                         {{-- Aksi --}}
                         <div class="d-flex gap-1">
-                            <a href="{{ route('admin.produk.edit', $item->id) }}"
+                            <a href="{{ route('admin.produk.edit', ['produk' => $item->id, 'page' => request('page', 1), 'search' => request('search')]) }}"
                                class="btn btn-sm btn-warning flex-fill">
                                 Edit
                             </a>
@@ -78,6 +86,7 @@
                                 </button>
                             </form>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -104,6 +113,16 @@
     .product-card:hover {
         transform: translateY(-3px);
         box-shadow: 0 6px 16px rgba(0,0,0,.08) !important;
+    }
+    .product-card .card-body {
+        font-size: 0.8rem;
+    }
+    .product-card .btn-sm {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.3rem;
+    }
+    .text-rupiah {
+        color: #16a34a !important;
     }
 </style>
 @endsection

@@ -7,11 +7,19 @@ use App\Models\User;
 
 class PenjualanPolicy
 {
-    public function delete(User $user, Penjualan $penjualan): bool
-    {
-        return $user->role->name === 'admin'
-         && $penjualan->status === 'OPEN';
+   public function delete(User $user, Penjualan $penjualan): bool
+{
+    if ($penjualan->status !== 'OPEN') {
+        return false;
     }
+
+    if ($user->role->name === 'admin') {
+        return true;
+    }
+
+    // Kasir hanya boleh batalkan transaksi miliknya sendiri
+    return $user->role->name === 'kasir' && $user->id === $penjualan->user_id;
+}
 
     public function view(User $user, Penjualan $penjualan): bool
     {

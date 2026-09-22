@@ -33,9 +33,10 @@
 
 <h4>Edit Produk</h4>
 
-<form action="{{ route('admin.produk.update', $produk) }}"
+<form action="{{ route('admin.produk.update', ['produk' => $produk, 'page' => request('page'), 'search' => request('search')]) }}"
       method="POST"
       enctype="multipart/form-data">
+      @csrf
       @method('PUT')
       @include('produk._form')
 </form>
